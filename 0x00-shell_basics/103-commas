@@ -1,2 +1,2 @@
 #!/bin/bash
-ls -ap | grep -v '^\./$' | grep -v '^\.\./$' | sort -V | sed 's/^/ /' | tr '\n' ',' | sed 's/, $/\n/' | sed 's/^, //'
+echo "./, ../, $(ls -Ap | grep -v '^\./$' | grep -v '^\.\./$' | sort | sed 's| |/ |' | tr '\n' ', ' | sed 's/, $/\n/')"
