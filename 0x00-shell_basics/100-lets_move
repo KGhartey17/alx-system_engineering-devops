@@ -1,2 +1,2 @@
 #!/bin/bash
-mv /path/to/your/project/0x00-shell_basics/[A-Z]* /tmp/u
+mv [A-Z]* /tmp/u
