@@ -48,9 +48,22 @@ Prints all possible combinations of two lowercase letters from `aa` to `zz`, exc
 ### 13-print_float
 Prints the value of the `NUM` environment variable with two decimal places.
 
+### 100-decimal_to_hexadecimal
+Converts a number from base 10 to base 16. The number is stored in the `DECIMAL` environment variable.
+
+### 101-rot13
+Encodes and decodes text using ROT13 encryption.
+
+### 102-odd
+Prints every other line from the input, starting with the first line.
+
+### 103-water_and_stir
+Adds the two numbers stored in the environment variables `WATER` and `STIR` (in bases water and stir, respectively) and prints the result in base bestchol.
+
 ## Usage
 
 To execute a script, ensure it is in the current directory and is executable. Use the following command format:
 ```bash
 ./script_name
+
 
