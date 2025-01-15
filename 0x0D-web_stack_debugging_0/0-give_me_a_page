@@ -1,3 +1,9 @@
 #!/usr/bin/env bash
-# connecting to the container and fixing
-service apache2 start
+# fixing issues arrised from using docker
+# make the apache server return Hello Holerton when querying the root 
+
+sudo apt-get update -y
+sudo apt-get install -y apache2
+sudo /etc/init.d/apache2 start
+echo "Hello Holberton" | sudo tee -a /va/www/html/index.html
+sudo /etc.init.d.apache2 restart 
