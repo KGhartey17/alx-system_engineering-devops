@@ -1,38 +1,12 @@
-#!/bin/bash
+#!/usr/bin/env bash
+# A script that installs Apache, creates a Hello ALX page, and starts Apache in the container.
 
-# Pull the image (if needed)
-docker pull alx/265-0
+# Updating the package list and install Apache if it's not installed
+apt-get update
+apt-get install apache2 -y
 
-# Run the Docker container in detached mode and bind port 8080 on the host to port 80 in the container
-docker run -p 8080:80 -d -it alx/265-0
+# Creating the 'Hello ALX' page
+echo "Hello ALX" > /var/www/html/index.html
 
-# Wait a few seconds for the container to start up
-sleep 5
-
-# Get the container ID
-container_id=$(docker ps -q --filter "ancestor=alx/265-0")
-
-# Check if the container is running
-if [[ -z "$container_id" ]]; then
-  echo "Container is not running. Exiting."
-  exit 1
-fi
-
-# Connect to the container
-echo "Connecting to container $container_id..."
-
-# Start Apache server if it's not already running
-docker exec -it $container_id service apache2 start
-
-# Create the index.html file with "Hello ALX" content
-docker exec -it $container_id bash -c "echo 'Hello ALX' > /var/www/html/index.html"
-
-# Check if Apache is serving the page
-echo "Waiting for Apache to serve the page..."
-sleep 3
-
-# Test if the page is accessible
-curl http://localhost:8080
-
-# Output a message to indicate the script completion
-echo "The web page should now be accessible at http://localhost:8080 with content 'Hello ALX'."
+# Starting the Apache service
+service apache2 start
