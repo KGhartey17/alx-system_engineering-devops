@@ -2,11 +2,10 @@
 # A script that installs Apache, creates a Hello ALX page, and starts Apache in the container.
 
 # Updating the package list and install Apache if it's not installed
-apt-get update
-apt-get install apache2 -y
+sudo apt-get update -y
+sudo apt-get install apache2 -y
+sudo /etc/init.d/apache2 start
 
 # Creating the 'Hello ALX' page
-echo "Hello ALX" > /var/www/html/index.html
-
-# Starting the Apache service
-sudo service apache2 start
+echo "Hello ALX" | sudo tee -a /var/www/html/index.html
+sudo /etc/init.d/apache2 restart
