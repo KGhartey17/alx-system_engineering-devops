@@ -9,4 +9,4 @@ apt-get install apache2 -y
 echo "Hello ALX" > /var/www/html/index.html
 
 # Starting the Apache service
-service apache2 start
+sudo service apache2 start
