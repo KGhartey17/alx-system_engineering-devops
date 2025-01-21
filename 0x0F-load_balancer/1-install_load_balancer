@@ -41,8 +41,8 @@ frontend web-with-joe-tech-frontend
 
 backend web-with-joe-tech-backend
     balance roundrobin
-    server 483712-web-01 54.90.63.148:80 check
-    server 483712-web-02 100.26.173.111:80 check
+    server 806573-web-01 54.209.16.146 check
+    server 806573-web-02 54.146.85.153 check
 "
 
 # shellcheck disable=SC2154
