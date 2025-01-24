@@ -1,41 +1,15 @@
 #!/usr/bin/env bash
-# Script to display subdomain information for a given domain
-# Ignores shellcheck case SC2086
+# print domains and subdomains
 
-# Function to fetch and display subdomain info
-get_subdomain_info() {
-    local domain=$1
-    local subdomain=$2
-
-    # Use dig to get DNS info and filter the necessary data
-    local result=$(dig "${subdomain}.${domain}" | grep -A1 'ANSWER SECTION:')
-    local record_type=$(echo "$result" | awk '/IN/ {print $3}')
-    local destination=$(echo "$result" | awk '/IN/ {print $5}')
-
-    if [[ -n $record_type && -n $destination ]]; then
-        echo "The subdomain ${subdomain} is a ${record_type} record and points to ${destination}"
-    else
-        echo "The subdomain ${subdomain} does not exist or has no valid records."
-    fi
+print_domain_subdomain() {
+    dig "$1" | grep -A1 'ANSWER SECTION:' | sed -r "s/$1./$2/g" | awk -F" " ' NR==2 { print "The subdomain " $1 " is a " $4 " record and points to " $5 }'
 }
 
-# Main script logic
-if [[ $# -lt 1 ]]; then
-    echo "Usage: $0 domain [subdomain]"
-    exit 1
-fi
-
-domain=$1
-subdomain=$2
-
-# If a specific subdomain is provided, fetch its info
-if [[ -n $subdomain ]]; then
-    get_subdomain_info "$domain" "$subdomain"
+if [ "$#" -eq 2 ]; then
+    print_domain_subdomain "$2.$1" "$2"
 else
-    # List of default subdomains to query
-    default_subdomains=(www lb-01 web-01 web-02)
-
-    for sub in "${default_subdomains[@]}"; do
-        get_subdomain_info "$domain" "$sub"
-    done
+    print_domain_subdomain "www.$1" "www"
+    print_domain_subdomain "lb-01.$1" "lb-01"
+    print_domain_subdomain "web-01.$1" "web-01"
+    print_domain_subdomain "web-02.$1" "web-02"
 fi
