@@ -1,4 +1,16 @@
 #!/bin/bash
-# Gracefully reloads Gunicorn.
+# Reloads Gunicorn gracefully without downtime.
 
-pgrep gunicorn | xargs kill -HUP
+# Find the Gunicorn master process ID (only the parent/master)
+GUNICORN_MASTER_PID=$(pgrep -f "gunicorn" | head -n 1)
+
+# Check if Gunicorn is running
+if [[ -z "$GUNICORN_MASTER_PID" ]]; then
+    echo "Gunicorn is not running."
+    exit 1
+fi
+
+# Send HUP signal to gracefully reload Gunicorn
+kill -HUP "$GUNICORN_MASTER_PID"
+
+echo "Gunicorn master (PID: $GUNICORN_MASTER_PID) has been reloaded gracefully."
